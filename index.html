@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuaca</title>
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body>
-    <div class="container">
+    <div class="main">
         <h1>Cuaca Hari Ini</h1>
         <form id="search-form">
-            <input type="text" id="city-input" placeholder="Masukkan nama kota">
+            <div>
+                <label for="longitude-input">Longitude:</label>
+                <input type="text" id="longitude-input" name="longitude" required>
+            </div>
+            <div>
+                <label for="latitude-input">Latitude:</label>
+                <input type="text" id="latitude-input" name="latitude" required>
+            </div>
             <button type="submit">Cari</button>
         </form>
         <div id="weather-info"></div>
