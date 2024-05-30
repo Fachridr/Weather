@@ -7,19 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="main">
-        <h1>Cuaca Hari Ini</h1>
-        <form id="search-form">
-            <div>
-                <label for="longitude-input">Longitude:</label>
-                <input type="text" id="longitude-input" name="longitude" required>
-            </div>
-            <div>
-                <label for="latitude-input">Latitude:</label>
-                <input type="text" id="latitude-input" name="latitude" required>
-            </div>
-            <button type="submit">Cari</button>
-        </form>
+    <div class="container">
+        <h1>Weather App</h1>
+        <input type="text" id="cityInput" placeholder="Enter city">
+        <button onclick="getWeather()">Get Weather</button>
+        <div id="weatherInfo"></div>
+    </div>
         <div id="weather-info"></div>
     </div>
     <script src=”script.js”></script>
