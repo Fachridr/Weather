@@ -1,14 +1,62 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const cityName = 'Garut, Indonesia';
-    const apiUrl = 'https://api.open-meteo.com/v1/forecast?latitude=-7.2024&longitude=107.8878&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto';
+    document.getElementById('submit-city').addEventListener('click', () => {
+        const cityName = document.getElementById('city-input').value;
+        if (cityName) {
+            getCoordinates(cityName).then(coords => {
+                if (coords) {
+                    const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`;
+                    document.getElementById('city-name').textContent = cityName;
+                    fetchWeatherData(apiUrl);
+                } else {
+                    alert('Kota tidak ditemukan');
+                }
+            });
+        } else {
+            alert('Masukkan nama kota');
+        }
+    });
+});
 
-    document.getElementById('city-name').textContent = cityName;
-
-    fetch(apiUrl)
-        .then(response => response.json())
+function getCoordinates(cityName) {
+    const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=id&format=json`;
+    console.log(`Geocoding URL: ${geocodingUrl}`);
+    return fetch(geocodingUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log('Geocoding response data:', data);
+            if (data.results && data.results.length > 0) {
+                return {
+                    latitude: data.results[0].latitude,
+                    longitude: data.results[0].longitude
+                };
+            } else {
+                return null;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching coordinates:', error);
+            return null;
+        });
+}
+
+function fetchWeatherData(apiUrl) {
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Weather data:', data);
             const forecast = data.daily;
             const weatherContainer = document.getElementById('weather-forecast');
+            weatherContainer.innerHTML = ''; 
 
             forecast.time.forEach((date, index) => {
                 const dayDiv = document.createElement('div');
@@ -41,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const weatherContainer = document.getElementById('weather-forecast');
             weatherContainer.innerHTML = '<p>Gagal mengambil data cuaca.</p>';
         });
-});
+}
 
 function getWeatherDescription(code) {
     const weatherDescriptions = {

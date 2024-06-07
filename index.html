@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuaca Garut Selama 7 Hari</title>
+    <title>Ramalan Cuaca Selama 7 Hari</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css">
 </head>
 <body>
-    <div id="weather-forecast">
-    <h2 id="city-name">Garut, Indonesia</h2>
+    <div class="container">
+    <h1>Prakiraan Cuaca</h1>
+    <div id="city-name">
+        <input type="text" id="city-input" placeholder="Masukkan nama kota">
+        <button id="submit-city">Tampilkan Cuaca</button>
+    </div>
+    <div id="weather-forecast"></div>
     </div>
     <script src="script.js"></script>
 </body>
